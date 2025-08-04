@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Search Cases</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #c2e9fb, #fceabb);
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    #searchInput {
+      width: 60%;
+      padding: 10px;
+      margin: 0 auto 20px auto;
+      display: block;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Search Cases</h2>
+  <input type="text" id="searchInput" placeholder="Search by Criminal Name, Case Number, Type, Place, or Description" />
+
+  <table id="resultsTable">
+    <thead>
+      <tr>
+        <th>Criminal Name</th>
+        <th>Case Number</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Type</th>
+        <th>Place</th>
+        <th>Description</th>
+        <th>File</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Results will be added here -->
+    </tbody>
+  </table>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const resultsTable = document.getElementById('resultsTable').querySelector('tbody');
+
+    searchInput.addEventListener('input', function () {
+      const query = searchInput.value.trim();
+
+      if (query === '') {
+        resultsTable.innerHTML = '';
+        return;
+      }
+
+      fetch(`http://localhost:5000/api/cases/search?query=${encodeURIComponent(query)}`)
+        .then(res => res.json())
+        .then(data => {
+          resultsTable.innerHTML = '';
+
+          data.forEach(caseItem => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${caseItem.criminalName}</td>
+              <td>${caseItem.caseNumber}</td>
+              <td>${caseItem.date}</td>
+              <td>${caseItem.time}</td>
+              <td>${caseItem.type}</td>
+              <td>${caseItem.place}</td>
+              <td>${caseItem.description}</td>
+              <td>
+                ${caseItem.file
+                  ?` <a href="http://localhost:5000/uploads/${caseItem.file}" target="_blank">View File</a>`
+                  : 'No File'}
+              </td>
+            `;
+            resultsTable.appendChild(row);
+          });
+        })
+        .catch(err => {
+          console.error('Error fetching search results:', err);
+        });
+    });
+  </script>
+</body>
+</html>

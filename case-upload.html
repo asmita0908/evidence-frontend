@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Case</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #a3d5ff, #d2eaff);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    form {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input, textarea, button, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="caseForm" enctype="multipart/form-data">
+    <h2>Upload New Case</h2>
+
+    <label for="caseNumber">Case Number:</label>
+    <input type="text" name="caseNumber" required>
+
+    <label for="date">Date:</label>
+    <input type="date" name="date" required>
+
+    <label for="time">Time:</label>
+    <input type="time" name="time" required>
+
+    <label for="type">Type:</label>
+    <input type="text" name="type" required>
+
+    <label for="place">Place:</label>
+    <input type="text" name="place" required>
+
+    <label for="description">Description:</label>
+    <textarea name="description" rows="3" required></textarea>
+
+    <label for="file">Upload File (optional):</label>
+    <input type="file" name="file">
+
+    <button type="submit">Submit Case</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('caseForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        const res = await fetch('http://localhost:5000/api/cases/upload', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+          alert("✅ Case uploaded successfully!");
+          form.reset();
+        } else {
+          alert("❌ " + result.message);
+        }
+      } catch (err) {
+        alert("❌ Error uploading case");
+        console.error(err);
+      }
+    });
+  </script>
+
+</body>
+</html>

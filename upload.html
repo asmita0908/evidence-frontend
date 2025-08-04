@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Case</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #c1f0f6, #fbe3e8);
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    form {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      border: 2px solid #ccc;
+      background: #fff;
+      border-radius: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h2>Upload Case</h2>
+  <form action="http://localhost:5000/api/cases/upload" method="POST" enctype="multipart/form-data">
+    <label for="caseNumber">Case Number:</label>
+    <input type="text" name="caseNumber" required>
+
+    <label for="date">Date:</label>
+    <input type="date" name="date" required>
+
+    <label for="time">Time:</label>
+    <input type="time" name="time" required>
+
+    <label for="type">Type:</label>
+    <input type="text" name="type" required>
+
+    <label for="place">Place:</label>
+    <input type="text" name="place" required>
+
+    <label for="criminalName">Criminal Name:</label>
+    <input type="text" name="criminalName" required>
+
+    <label for="description">Description:</label>
+    <textarea name="description" rows="4" required></textarea>
+
+    <label for="file">Upload File:</label>
+    <input type="file" name="file">
+
+    <button type="submit">Upload Case</button>
+  </form>
+</body>
+</html>
