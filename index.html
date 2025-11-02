@@ -30,7 +30,7 @@
       const password = document.getElementById('password').value;
 
       // ✅ Yahan extra comma hata diya gaya hai aur AWS IP add kiya gaya hai
-      fetch('http://54.158.242.164:5000/api/users/login', { 
+      fetch('http://54.158.242.164:5000/api/auth/login', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
