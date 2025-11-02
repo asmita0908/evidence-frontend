@@ -1,31 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Sign Up</title>
-  <link rel="stylesheet" href="style.css">
-    </head>
+  <meta charset="UTF-8">
+  <title>Sign Up | Evidence Manager</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Signup Page</h2>
-  <form action="login.html" method="POST">
-    <label>Username:</label><br>
-    <input type="text" name="username" required><br><br>
+  <h2>Signup Page</h2>
+    <form id="signupForm"> 
+    <label>Username:</label><br>
+    <input type="text" id="username" required><br><br>
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+    <label>Email:</label><br>
+    <input type="email" id="email" required><br><br>
 
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
+    <label>Password:</label><br>
+    <input type="password" id="password" required><br><br>
 
-    <label>Confirm Password:</label><br>
-    <input type="password" name="confirm_password" required><br><br>
+    <label>Confirm Password:</label><br>
+    <input type="password" id="confirm_password" required><br><br>
 
-    <input type="checkbox" required> I agree to the Terms and Conditions<br><br>
+    <input type="checkbox" id="terms" required> I agree to the Terms and Conditions<br><br>
 
-    <button type="submit">Sign Up</button><br><br>
+    <button type="submit">Sign Up</button><br><br>
 
-    <a href="login.html">Already have an account? Log in</a>
-  </form>
+    <a href="login.html">Already have an account? Log in</a>
+  </form>
+
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm_password').value;
+
+      if (password !== confirmPassword) {
+        alert('Error: Passwords do not match!');
+        return;
+      }
+      if (!document.getElementById('terms').checked) {
+        alert('You must agree to the Terms and Conditions.');
+        return;
+      }
+
+      // ✅ Sahi URL aur Method: /api/auth/signup
+      fetch('http://54.158.242.164:5000/api/auth/signup', { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password }) 
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.message === 'User registered successfully' || data.success) { 
+          alert('Signup Successful! You can now log in.');
+          // Redirect to the login page
+          window.location.href = 'index.html'; 
+        } else {
+          alert(data.message || 'Signup failed! Please check details.');
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert('An error occurred. Check if the AWS server is running.');
+      });
+    });
+  </script>
 </body>
 </html>

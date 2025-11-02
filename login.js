@@ -5,7 +5,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     const password = document.getElementById('password').value;
   
     // ✅ URL ko quotes ('') mein band kiya gaya hai aur http:// protocol add kiya gaya hai
-    fetch('http://54.158.242.164:5000/api/users/login', { 
+    fetch('http://54.158.242.164:5000/api/auth/login', { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
