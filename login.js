@@ -27,9 +27,8 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         alert('Login failed: ' + data.message);
       }
     })
-    .catch(error => {
-      console.error('Error:', error);
-      // Agar connection ya server down ho toh yeh alert aayega
-      alert('An error occurred. Check if the AWS server is running and port 5000 is open.');
-    });
+    .ccatch(error => {
+  console.error('Error:', error);
+  alert('An error occurred. Please check if the backend server is running.');
+});
 });
