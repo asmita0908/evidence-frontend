@@ -67,32 +67,40 @@
   <script>
     let allCases = [];
 
-    fetch('http://localhost:5000/api/cases')
-      .then(res => res.json())
-      .then(data => {
-        allCases = data;
-        renderTable(allCases);
-      });
+    fetch('https://evidence-backend-render.onrender.com/api/cases')
+  .then(res => res.json())
+  .then(data => {
+    allCases = data;
+    renderTable(allCases);
+  });
 
-    function renderTable(cases) {
-      const tbody = document.querySelector('#casesTable tbody');
-      tbody.innerHTML = '';
-      cases.forEach(c => {
-        const row = `
-          <tr>
-            <td>${c.caseNumber}</td>
-            <td>${c.date}</td>
-            <td>${c.time}</td>
-            <td>${c.type}</td>
-            <td>${c.place}</td>
-            <td>${c.criminalName || ''}</td>
-            <td>${c.description}</td>
-            <td>${c.file ? <a href="http://localhost:5000/uploads/${c.file}" target="_blank">View</a> : 'No File'}</td>
-          </tr>
-        `;
-        tbody.innerHTML += row;
-      });
-    }
+function renderTable(cases) {
+  const tbody = document.querySelector('#casesTable tbody');
+  tbody.innerHTML = '';
+
+  cases.forEach(c => {
+    const row = `
+      <tr>
+        <td>${c.caseNumber}</td>
+        <td>${c.date}</td>
+        <td>${c.time}</td>
+        <td>${c.type}</td>
+        <td>${c.place}</td>
+        <td>${c.criminalName || ''}</td>
+        <td>${c.description}</td>
+        <td>
+          ${
+            c.file
+              ? `<a href="https://evidence-backend-render.onrender.com/uploads/${c.file}" target="_blank">View</a>`
+              : 'No File'
+          }
+        </td>
+      </tr>
+    `;
+    tbody.innerHTML += row;
+  });
+}
+
 
     document.getElementById('searchInput').addEventListener('input', function () {
       const keyword = this.value.toLowerCase();
