@@ -84,7 +84,8 @@
         return;
       }
 
-      fetch(`http://localhost:5000/api/cases/search?query=${encodeURIComponent(query)}`)
+      fetch(`https://evidence-backend.onrender.com/api/cases/search?query=${encodeURIComponent(query)}`)
+
         .then(res => res.json())
         .then(data => {
           resultsTable.innerHTML = '';
@@ -100,9 +101,9 @@
               <td>${caseItem.place}</td>
               <td>${caseItem.description}</td>
               <td>
-                ${caseItem.file
-                  ?` <a href="http://localhost:5000/uploads/${caseItem.file}" target="_blank">View File</a>`
-                  : 'No File'}
+  ${caseItem.file
+    ? `<a href="https://evidence-backend.onrender.com/uploads/${caseItem.file}" target="_blank">View File</a>`
+    : 'No File'}
               </td>
             `;
             resultsTable.appendChild(row);
