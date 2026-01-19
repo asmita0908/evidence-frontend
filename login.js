@@ -11,26 +11,20 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     },
     body: JSON.stringify({ email, password }),
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
-      return response.json();
-    })
+    .then(res => res.json())
     .then(data => {
       if (data.token) {
-        // ✅ SAVE TOKEN (VERY IMPORTANT)
         localStorage.setItem('token', data.token);
         localStorage.setItem('role', data.user.role);
 
-        alert('Login successful!');
+        alert('Login successful');
         window.location.href = 'dashboard.html';
       } else {
-        alert(data.message || 'Invalid login credentials');
+        alert(data.message || 'Invalid credentials');
       }
     })
-    .catch(error => {
-      console.error('Login error:', error);
-      alert('Server error. Please try again later.');
+    .catch(err => {
+      console.error(err);
+      alert('Server error');
     });
 });

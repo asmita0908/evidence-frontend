@@ -1,118 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>View All Cases</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #c1f0f6, #fbe3e8);
-      padding: 20px;
-    }
-
-    h2 {
-      text-align: center;
-    }
-
-    #searchInput {
-      width: 50%;
-      padding: 10px;
-      margin: 0 auto;
-      display: block;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: left;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
-    a {
-      color: blue;
-    }
-  </style>
+  <title>View Cases</title>
 </head>
 <body>
-  <h2>All Uploaded Cases</h2>
-  <input type="text" id="searchInput" placeholder="Search by Case Number, Type, Place, Criminal Name or Description..." />
 
-  <table id="casesTable">
-    <thead>
-      <tr>
-        <th>Case Number</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Type</th>
-        <th>Place</th>
-        <th>Criminal Name</th>
-        <th>Description</th>
-        <th>File</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+<h2>All Cases</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Case No</th>
+      <th>Type</th>
+      <th>Place</th>
+      <th>Criminal</th>
+      <th>File</th>
+    </tr>
+  </thead>
+  <tbody id="casesBody"></tbody>
+</table>
 
-  <script>
-    let allCases = [];
+<script>
+const token = localStorage.getItem('token');
+if (!token) {
+  alert('Please login first');
+  window.location.href = 'index.html';
+}
 
-    fetch('https://evidence-backend-render.onrender.com/api/cases')
-  .then(res => res.json())
-  .then(data => {
-    allCases = data;
-    renderTable(allCases);
-  });
+fetch('https://evidence-backend-uim6.onrender.com/api/cases', {
+  headers: {
+    Authorization: 'Bearer ' + localStorage.getItem('token')
+  }
+})
+.then(res => res.json())
+.then(data => {
+  const body = document.getElementById('casesBody');
+  body.innerHTML = '';
 
-function renderTable(cases) {
-  const tbody = document.querySelector('#casesTable tbody');
-  tbody.innerHTML = '';
-
-  cases.forEach(c => {
-    const row = `
+  data.forEach(c => {
+    body.innerHTML += `
       <tr>
         <td>${c.caseNumber}</td>
-        <td>${c.date}</td>
-        <td>${c.time}</td>
         <td>${c.type}</td>
         <td>${c.place}</td>
         <td>${c.criminalName || ''}</td>
-        <td>${c.description}</td>
         <td>
-          ${
-            c.file
-              ? `<a href="https://evidence-backend-render.onrender.com/uploads/${c.file}" target="_blank">View</a>`
-              : 'No File'
-          }
+          ${c.file 
+            ? `<a href="https://evidence-backend-uim6.onrender.com/uploads/${c.file}" target="_blank">View</a>`
+            : 'No File'}
         </td>
       </tr>
     `;
-    tbody.innerHTML += row;
   });
-}
+});
+</script>
 
-
-    document.getElementById('searchInput').addEventListener('input', function () {
-      const keyword = this.value.toLowerCase();
-      const filtered = allCases.filter(c =>
-        (c.caseNumber || '').toLowerCase().includes(keyword) ||
-        (c.type || '').toLowerCase().includes(keyword) ||
-        (c.place || '').toLowerCase().includes(keyword) ||
-        (c.description || '').toLowerCase().includes(keyword) ||
-        (c.criminalName || '').toLowerCase().includes(keyword)
-      );
-      renderTable(filtered);
-    });
-  </script>
 </body>
 </html>
