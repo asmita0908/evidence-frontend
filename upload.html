@@ -29,7 +29,7 @@
       font-weight: bold;
     }
 
-    input, textarea, select {
+    input, textarea {
       width: 100%;
       padding: 8px;
       margin-top: 5px;
@@ -46,40 +46,85 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
-    button:hover {
-      background-color: #45a049;
-    }
   </style>
 </head>
 <body>
-  <h2>Upload Case</h2>
-  <form action="http://localhost:5000/api/cases/upload" method="POST" enctype="multipart/form-data">
-    <label for="caseNumber">Case Number:</label>
-    <input type="text" name="caseNumber" required>
 
-    <label for="date">Date:</label>
-    <input type="date" name="date" required>
+<h2>Upload Case</h2>
 
-    <label for="time">Time:</label>
-    <input type="time" name="time" required>
+<form id="uploadForm" enctype="multipart/form-data">
 
-    <label for="type">Type:</label>
-    <input type="text" name="type" required>
+  <label>Case Number</label>
+  <input type="text" id="caseNumber" required>
 
-    <label for="place">Place:</label>
-    <input type="text" name="place" required>
+  <label>Date</label>
+  <input type="date" id="date" required>
 
-    <label for="criminalName">Criminal Name:</label>
-    <input type="text" name="criminalName" required>
+  <label>Time</label>
+  <input type="time" id="time" required>
 
-    <label for="description">Description:</label>
-    <textarea name="description" rows="4" required></textarea>
+  <label>Type</label>
+  <input type="text" id="type" required>
 
-    <label for="file">Upload File:</label>
-    <input type="file" name="file">
+  <label>Place</label>
+  <input type="text" id="place" required>
 
-    <button type="submit">Upload Case</button>
-  </form>
+  <label>Criminal Name</label>
+  <input type="text" id="criminalName">
+
+  <label>Description</label>
+  <textarea id="description" rows="4"></textarea>
+
+  <label>Upload File</label>
+  <input type="file" id="file" required>
+
+  <button type="submit">Upload Case</button>
+</form>
+
+<p id="msg"></p>
+
+<script>
+window.onload = () => {
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+
+  if (!token || role === 'viewer') {
+    alert('Unauthorized');
+    window.location.href = 'dashboard.html';
+  }
+};
+
+document.getElementById('uploadForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const formData = new FormData();
+  formData.append('caseNumber', caseNumber.value);
+  formData.append('date', date.value);
+  formData.append('time', time.value);
+  formData.append('type', type.value);
+  formData.append('place', place.value);
+  formData.append('criminalName', criminalName.value);
+  formData.append('description', description.value);
+  formData.append('file', file.files[0]);
+
+  fetch('https://evidence-backend-uim6.onrender.com/api/cases/upload', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token')
+    },
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('msg').innerText = data.message || 'Case Uploaded Successfully';
+    document.getElementById('uploadForm').reset();
+  })
+  .catch(err => {
+    console.error(err);
+    alert('Upload failed');
+  });
+});
+</script>
+
 </body>
 </html>
