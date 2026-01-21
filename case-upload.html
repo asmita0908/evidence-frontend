@@ -92,7 +92,7 @@
       const formData = new FormData(form);
 
       try {
-        const res = await fetch('http://localhost:5000/api/cases/upload', {
+        const res = await fetch('https://evidence-backend-uim6.onrender.com/api/cases/upload', {
           method: 'POST',
           body: formData
         });

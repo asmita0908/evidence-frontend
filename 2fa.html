@@ -23,7 +23,7 @@
       const token = document.getElementById('token').value;
       const email = localStorage.getItem('userEmail');  // from login
 
-      fetch('http://localhost:5000/api/users/verify-2fa', {
+      fetch('https://evidence-backend-uim6.onrender.com/api/users/verify-2fa', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, token })
