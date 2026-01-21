@@ -23,37 +23,35 @@
   </div>
 
   <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-      // ✅ Yahan extra comma hata diya gaya hai aur AWS IP add kiya gaya hai
-      fetch("https://evidence-backend-render.onrender.com/api/auth/login", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(data)
-})
+    fetch("https://evidence-backend-uim6.onrender.com/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.message === 'Login successful') {
+        localStorage.setItem('userEmail', email);
+        window.location.href = '2fa.html';
+      } else {
+        alert(data.message || 'Login failed!');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Unable to connect to server. Please try again.");
+    });
+  });
+</script>
 
-      .then(res => res.json())
-      .then(data => {
-        if (data.message === 'Login successful') {
-          // Store email or token if needed
-          localStorage.setItem('userEmail', email);
-
-          // Redirect to 2FA page
-          window.location.href = '2fa.html';
-        } else {
-          alert(data.message || 'Login failed!');
-        }
-      })
-      .catch(err => {
-  console.error(err);
- alert("Unable to connect to server. Please try again.");
-});
-
-    });
-  </script>
 </body>
 </html>
