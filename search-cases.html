@@ -1,18 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Search Cases</title>
+  <title>View Cases</title>
 </head>
 <body>
 
-<h2>Search Cases</h2>
+<h2>All Cases</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Case No</th>
+      <th>Type</th>
+      <th>Place</th>
+      <th>Criminal</th>
+      <th>File</th>
+    </tr>
+  </thead>
+  <tbody id="casesBody"></tbody>
+</table>
 
-<input type="text" id="searchInput" placeholder="Search by case / place / name">
-<button onclick="searchCases()">Search</button>
+<script>
+const token = localStorage.getItem('token');
 
-<br><br>
-<div id="results"></div>
+if (!token) {
+  alert('Please login first');
+  window.location.href = 'index.html';
+}
 
-<script src="search.js"></script>
+fetch('https://evidence-backend-uim6.onrender.com/api/cases', {
+  headers: {
+    Authorization: 'Bearer ' + token
+  }
+})
+.then(res => res.json())
+.then(data => {
+  const body = document.getElementById('casesBody');
+  body.innerHTML = '';
+
+  data.forEach(c => {
+    body.innerHTML += `
+      <tr>
+        <td>${c.caseNumber}</td>
+        <td>${c.type}</td>
+        <td>${c.place}</td>
+        <td>${c.criminalName || ''}</td>
+        <td>
+          ${c.file 
+            ? `<a href="https://evidence-backend-uim6.onrender.com/uploads/${c.file}" target="_blank">View</a>`
+            : 'No File'}
+        </td>
+      </tr>
+    `;
+  });
+})
+.catch(err => {
+  console.error(err);
+  alert('Error loading cases');
+});
+</script>
+
 </body>
 </html>

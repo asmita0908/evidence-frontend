@@ -1,129 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Upload Case</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #c1f0f6, #fbe3e8);
-      padding: 30px;
-    }
-
-    h2 {
-      text-align: center;
-    }
-
-    form {
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
-      border: 2px solid #ccc;
-      background: #fff;
-      border-radius: 10px;
-    }
-
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  </style>
 </head>
 <body>
 
 <h2>Upload Case</h2>
 
-<form id="uploadForm" enctype="multipart/form-data">
+<form 
+  action="https://evidence-backend-uim6.onrender.com/api/cases/upload" 
+  method="POST" 
+  enctype="multipart/form-data">
 
-  <label>Case Number</label>
-  <input type="text" id="caseNumber" required>
+  <input name="caseNumber" placeholder="Case Number" required><br><br>
+  <input name="type" placeholder="Type" required><br><br>
+  <input name="place" placeholder="Place" required><br><br>
+  <input name="criminalName" placeholder="Criminal Name"><br><br>
+  <textarea name="description" placeholder="Description"></textarea><br><br>
+  <input type="file" name="file"><br><br>
 
-  <label>Date</label>
-  <input type="date" id="date" required>
-
-  <label>Time</label>
-  <input type="time" id="time" required>
-
-  <label>Type</label>
-  <input type="text" id="type" required>
-
-  <label>Place</label>
-  <input type="text" id="place" required>
-
-  <label>Criminal Name</label>
-  <input type="text" id="criminalName">
-
-  <label>Description</label>
-  <textarea id="description" rows="4"></textarea>
-
-  <label>Upload File</label>
-  <input type="file" id="file" required>
-
-  <button type="submit">Upload Case</button>
+  <button type="submit">Upload</button>
 </form>
 
-<p id="msg"></p>
-
 <script>
-window.onload = () => {
-  const token = localStorage.getItem('token');
-  const role = localStorage.getItem('role');
-
-  if (!token || role === 'viewer') {
-    alert('Unauthorized');
-    window.location.href = 'dashboard.html';
-  }
-};
-
-document.getElementById('uploadForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  const formData = new FormData();
-  formData.append('caseNumber', caseNumber.value);
-  formData.append('date', date.value);
-  formData.append('time', time.value);
-  formData.append('type', type.value);
-  formData.append('place', place.value);
-  formData.append('criminalName', criminalName.value);
-  formData.append('description', description.value);
-  formData.append('file', file.files[0]);
-
-  fetch('https://evidence-backend-uim6.onrender.com/api/cases/upload', {
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token')
-    },
-    body: formData
-  })
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('msg').innerText = data.message || 'Case Uploaded Successfully';
-    document.getElementById('uploadForm').reset();
-  })
-  .catch(err => {
-    console.error(err);
-    alert('Upload failed');
-  });
-});
+if (!localStorage.getItem('token')) {
+  alert('Please login first');
+  window.location.href = 'index.html';
+}
 </script>
 
 </body>

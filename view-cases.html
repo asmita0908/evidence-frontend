@@ -21,6 +21,7 @@
 
 <script>
 const token = localStorage.getItem('token');
+
 if (!token) {
   alert('Please login first');
   window.location.href = 'index.html';
@@ -28,7 +29,7 @@ if (!token) {
 
 fetch('https://evidence-backend-uim6.onrender.com/api/cases', {
   headers: {
-    Authorization: 'Bearer ' + localStorage.getItem('token')
+    Authorization: 'Bearer ' + token
   }
 })
 .then(res => res.json())
@@ -51,6 +52,10 @@ fetch('https://evidence-backend-uim6.onrender.com/api/cases', {
       </tr>
     `;
   });
+})
+.catch(err => {
+  console.error(err);
+  alert('Error loading cases');
 });
 </script>
 
