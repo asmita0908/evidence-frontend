@@ -1,72 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Sign Up | Evidence Manager</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Sign Up | Evidence Manager</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Signup Page</h2>
-    <form id="signupForm"> 
-    <label>Username:</label><br>
-    <input type="text" id="username" required><br><br>
 
-    <label>Email:</label><br>
-    <input type="email" id="email" required><br><br>
+  <h2>Signup Page</h2>
 
-    <label>Password:</label><br>
-    <input type="password" id="password" required><br><br>
+  <form id="signupForm">
+    <label>Username:</label><br>
+    <input type="text" id="username" required><br><br>
 
-    <label>Confirm Password:</label><br>
-    <input type="password" id="confirm_password" required><br><br>
+    <label>Email:</label><br>
+    <input type="email" id="email" required><br><br>
 
-    <input type="checkbox" id="terms" required> I agree to the Terms and Conditions<br><br>
+    <label>Password:</label><br>
+    <input type="password" id="password" required><br><br>
 
-    <button type="submit">Sign Up</button><br><br>
+    <label>Confirm Password:</label><br>
+    <input type="password" id="confirm_password" required><br><br>
 
-    <a href="login.html">Already have an account? Log in</a>
-  </form>
+    <input type="checkbox" id="terms" required>
+    I agree to the Terms and Conditions<br><br>
 
-  <script>
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+    <button type="submit">Sign Up</button><br><br>
 
-      const username = document.getElementById('username').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirm_password').value;
+    <a href="login.html">Already have an account? Log in</a>
+  </form>
 
-      if (password !== confirmPassword) {
-        alert('Error: Passwords do not match!');
-        return;
-      }
-      if (!document.getElementById('terms').checked) {
-        alert('You must agree to the Terms and Conditions.');
-        return;
-      }
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function (e) {
+      e.preventDefault();
 
-      // ✅ Sahi URL aur Method: /api/auth/signup
-      fetch('https://evidence-backend-render.onrender.com/api/auth/signup')
-, { 
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password }) 
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.message === 'User registered successfully' || data.success) { 
-          alert('Signup Successful! You can now log in.');
-          // Redirect to the login page
-          window.location.href = 'index.html'; 
-        } else {
-          alert(data.message || 'Signup failed! Please check details.');
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        alert('An error occurred. Check if the AWS server is running.');
-      });
-    });
-  </script>
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm_password').value;
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+
+      if (!document.getElementById('terms').checked) {
+        alert('You must agree to the Terms and Conditions');
+        return;
+      }
+
+      fetch('https://evidence-backend-uim6.onrender.com/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success || data.message === 'User registered successfully') {
+          alert('Signup successful! Please login.');
+          window.location.href = 'login.html';
+        } else {
+          alert(data.message || 'Signup failed');
+        }
+      })
+      .catch(err => {
+        console.error('Signup error:', err);
+        alert('Server error. Please try again in a moment.');
+      });
+    });
+  </script>
+
 </body>
 </html>
