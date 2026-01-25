@@ -23,35 +23,38 @@
   </div>
 
   <script>
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-    fetch("https://evidence-backend-uim6.onrender.com/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email,
-        password: password
-      })
+  fetch("https://evidence-backend-uim6.onrender.com/api/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.message === 'Login successful') {
-        localStorage.setItem('userEmail', email);
-        window.location.href = '2fa.html';
-      } else {
-        alert(data.message || 'Login failed!');
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Unable to connect to server. Please try again.");
-    });
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.message === "Login successful") {
+      localStorage.setItem("userEmail", email);
+      window.location.href = "2fa.html";
+    } else {
+      alert(data.message || "Login failed");
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Unable to connect to server. Please try again.");
   });
+});
 </script>
+
 
 </body>
 </html>
