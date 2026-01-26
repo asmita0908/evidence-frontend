@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(120deg, #c8f0f4, #fde2e4);
+  min-height: 100vh;
+}
+
+.page-title {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.search-box {
+  display: block;
+  width: 60%;
+  margin: 20px auto;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.case-table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.case-table th,
+.case-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.case-table th {
+  background: #f4f4f4;
+}

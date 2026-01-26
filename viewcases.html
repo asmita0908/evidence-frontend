@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Uploaded Cases</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1 class="page-title">All Uploaded Cases</h1>
+
+  <input
+    type="text"
+    id="searchAllInput"
+    class="search-box"
+    placeholder="Search by Case Number, Type, Place, Criminal Name or Description..."
+  >
+
+  <table class="case-table">
+    <thead>
+      <tr>
+        <th>Case Number</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Type</th>
+        <th>Place</th>
+        <th>Criminal Name</th>
+        <th>Description</th>
+        <th>File</th>
+      </tr>
+    </thead>
+    <tbody id="casesBody">
+      <!-- Backend se data -->
+    </tbody>
+  </table>
+
+  <script src="config.js"></script>
+  <script src="view-cases.js"></script>
+</body>
+</html>

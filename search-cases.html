@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Cases</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1 class="page-title">Search Cases</h1>
+
+  <input
+    type="text"
+    id="searchInput"
+    class="search-box"
+    placeholder="Search by Criminal Name, Case Number, Type, Place, or Description"
+  >
+
+  <table class="case-table">
+    <thead>
+      <tr>
+        <th>Criminal Name</th>
+        <th>Case Number</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Type</th>
+        <th>Place</th>
+        <th>Description</th>
+        <th>File</th>
+      </tr>
+    </thead>
+    <tbody id="resultsBody">
+      <!-- Data JS se aayega -->
+    </tbody>
+  </table>
+
+  <script src="config.js"></script>
+  <script src="search.js"></script>
+</body>
+</html>

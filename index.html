@@ -1,22 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login</title>
+  <meta charset="UTF-8">
+  <title>Login | Evidence Protection System</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>Login</h2>
+  <div class="container">
+    <h2>Evidence Protection System</h2>
+    <p class="subtitle">Secure Login</p>
 
-<form id="loginForm">
-  <input type="email" id="email" placeholder="Email" required><br><br>
-  <input type="password" id="password" placeholder="Password" required><br><br>
-  <button type="submit">Login</button>
-</form>
+    <form id="loginForm">
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
 
-<p><a href="signup.html">Create account</a></p>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+      </div>
 
-<script src="config.js"></script>
-<script src="login.js"></script>
+      <button type="submit" class="btn">Login</button>
+    </form>
+
+    <p class="link-text">
+      New user? <a href="signup.html">Create account</a>
+    </p>
+
+    <p class="link-text">
+      <a href="forgot-password.html">Forgot Password?</a>
+    </p>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
+
