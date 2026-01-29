@@ -1,41 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Login | Evidence Protection System</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Login</title>
 </head>
 <body>
 
-  <div class="container">
-    <h2>Evidence Protection System</h2>
-    <p class="subtitle">Secure Login</p>
+<h2>Login</h2>
 
-    <form id="loginForm">
-      <div class="input-group">
-        <label>Email</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
-      </div>
+<input id="email" placeholder="Email"><br><br>
+<input id="password" type="password" placeholder="Password"><br><br>
 
-      <div class="input-group">
-        <label>Password</label>
-        <input type="password" id="password" placeholder="Enter your password" required>
-      </div>
+<button onclick="login()">Login</button>
 
-      <button type="submit" class="btn">Login</button>
-    </form>
+<script>
+async function login() {
+  const email = email.value;
+  const password = password.value;
 
-    <!-- 👇 FORM KE BAHAR -->
-    <p class="link-text">
-      New user? <a href="signup.html">Create account</a>
-    </p>
+  const res = await fetch("https://YOUR-BACKEND-URL/api/login", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ email, password })
+  });
 
-    <p class="link-text">
-      <a href="forgot-password.html">Forgot Password?</a>
-    </p>
-  </div>
+  const data = await res.json();
+  console.log(data);
 
-  <script src="config.js"></script>
-  <script src="login.js"></script>
+  if (data.require2FA) {
+    localStorage.setItem("loginEmail", data.email);
+    window.location = "otp.html";
+    return;
+  }
+
+  if (data.success) {
+    localStorage.setItem("token", data.token);
+    alert("Login success");
+    window.location = "dashboard.html";
+  } else {
+    alert(data.message || "Login failed");
+  }
+}
+</script>
+
 </body>
 </html>
