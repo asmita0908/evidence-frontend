@@ -7,22 +7,30 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
   const role = document.getElementById("role").value;
 
   try {
-    const res = await fetch(`${BASE_URL}/api/signup`, {
+    const res = await fetch(`${BASE_URL}/api/auth/signup`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password, role })
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+        role
+      })
     });
 
     const data = await res.json();
 
     if (res.ok) {
-      alert("Signup successful");
-      window.location.href = "index.html";
+      alert("Signup successful 🎉");
+      window.location.href = "index.html"; // login page
     } else {
       alert(data.message || "Signup failed");
     }
 
-  } catch (err) {
+  } catch (error) {
+    console.error(error);
     alert("Server error");
   }
 });
