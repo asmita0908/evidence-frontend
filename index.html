@@ -17,7 +17,7 @@ async function login() {
   const email = email.value;
   const password = password.value;
 
-  const res = await fetch("https://YOUR-BACKEND-URL/api/login", {
+  const res = await fetch("https://https://evidence-backend-uim6.onrender.com/api/login", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ email, password })
