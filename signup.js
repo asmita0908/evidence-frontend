@@ -12,9 +12,14 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
     const res = await fetch(`${BASE_URL}/api/auth/signup`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password, role })
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+        role,
+      }),
     });
 
     const data = await res.json();
@@ -25,9 +30,8 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
     } else {
       alert(data.message || "Signup failed");
     }
-
   } catch (error) {
     console.error(error);
-    alert("Backend not reachable");
+    alert("Backend not reachable ❌");
   }
 });
