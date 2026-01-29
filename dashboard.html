@@ -1,81 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dashboard</title>
+  <title>Dashboard | Evidence System</title>
   <style>
     body {
       font-family: Arial;
-      background: linear-gradient(135deg,#e0f7fa,#fce4ec);
+      background: linear-gradient(135deg,#e3f2fd,#fce4ec);
       padding: 30px;
     }
+
     .card {
       background: white;
       padding: 20px;
-      border-radius: 12px;
-      margin: 15px 0;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
     }
+
     button {
       padding: 10px 16px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      margin: 6px;
+      font-size: 14px;
     }
+
+    .primary { background:#1976d2; color:white; }
+    .danger { background:#d32f2f; color:white; }
+
+    h2 { margin-top:0; }
   </style>
 </head>
+
 <body>
 
-<h2>Evidence System Dashboard</h2>
+<h2>🔐 Evidence Protection Dashboard</h2>
 
-<button onclick="logout()">Logout</button>
-
-<div id="roleBox"></div>
-
-<div class="card" id="adminPanel" style="display:none">
-  <h3>Admin Panel</h3>
-  <p>Manage users & system settings</p>
+<div class="card">
+  <b>User Role:</b> <span id="roleBox"></span>
 </div>
 
-<div class="card" id="officerPanel" style="display:none">
-  <h3>Officer Panel</h3>
-  <p>Upload and manage evidence</p>
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="card" style="display:none">
+  <h3>👑 Admin Controls</h3>
+  <button class="primary" onclick="goUpload()">Upload Evidence</button>
+  <button class="primary" onclick="goView()">View All Cases</button>
+  <button class="primary" onclick="goSearch()">Search Cases</button>
+  <button class="primary" onclick="goUsers()">Manage Users</button>
 </div>
 
-<div class="card" id="viewerPanel" style="display:none">
-  <h3>Viewer Panel</h3>
-  <p>View case records</p>
+<!-- OFFICER PANEL -->
+<div id="officerPanel" class="card" style="display:none">
+  <h3>🛡 Officer Controls</h3>
+  <button class="primary" onclick="goUpload()">Upload Evidence</button>
+  <button class="primary" onclick="goView()">View Cases</button>
+</div>
+
+<!-- VIEWER PANEL -->
+<div id="viewerPanel" class="card" style="display:none">
+  <h3>👁 Viewer Access</h3>
+  <button class="primary" onclick="goView()">View Cases</button>
 </div>
 
 <div class="card">
-  <h3>Protected API Test</h3>
-  <button onclick="loadSecure()">Load Secure Data</button>
-  <pre id="secureOut"></pre>
+  <button class="danger" onclick="logout()">Logout</button>
 </div>
 
 <script>
-const BACKEND = "https://evidence-backend-uim6.onrender.com";
 
-// ✅ JWT check
 const token = localStorage.getItem("token");
+const role = localStorage.getItem("role");
+
 if (!token) {
-  alert("Login required");
+  alert("Login first");
   window.location = "login.html";
 }
 
-// ✅ Decode JWT (role read)
-function parseJwt (t) {
-  const base64Url = t.split('.')[1];
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  return JSON.parse(atob(base64));
-}
+document.getElementById("roleBox").innerText = role;
 
-const payload = parseJwt(token);
-const role = payload.role;
-
-document.getElementById("roleBox").innerHTML =
-  `<div class="card">Logged in as: <b>${role}</b></div>`;
-
-// ✅ Role based panels
+// show role panels
 if (role === "admin") {
   adminPanel.style.display = "block";
 }
@@ -86,27 +90,28 @@ else {
   viewerPanel.style.display = "block";
 }
 
-
-// ✅ Protected API call example
-async function loadSecure() {
-  const res = await fetch(`${BACKEND}/api/protected`, {
-    headers: {
-      Authorization: token
-    }
-  });
-
-  const data = await res.json();
-  document.getElementById("secureOut").textContent =
-    JSON.stringify(data, null, 2);
+// navigation functions
+function goUpload() {
+  window.location = "upload.html";
 }
 
+function goView() {
+  window.location = "view-cases.html";
+}
 
-// ✅ Logout
+function goSearch() {
+  window.location = "search-cases.html";
+}
+
+function goUsers() {
+  alert("User management page next step 😉");
+}
+
 function logout() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("loginEmail");
+  localStorage.clear();
   window.location = "login.html";
 }
+
 </script>
 
 </body>
