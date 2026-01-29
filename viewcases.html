@@ -7,34 +7,35 @@
 </head>
 <body>
 
-  <h1 class="page-title">All Uploaded Cases</h1>
+  <div class="container">
+    <h1 class="page-title">All Uploaded Cases</h1>
 
-  <input
-    type="text"
-    id="searchAllInput"
-    class="search-box"
-    placeholder="Search by Case Number, Type, Place, Criminal Name or Description..."
-  >
+    <input
+      type="text"
+      id="searchAllInput"
+      class="search-box"
+      placeholder="Search by Case Number, Type, Place, Criminal Name or Description..."
+    >
 
-  <table class="case-table">
-    <thead>
-      <tr>
-        <th>Case Number</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Type</th>
-        <th>Place</th>
-        <th>Criminal Name</th>
-        <th>Description</th>
-        <th>File</th>
-      </tr>
-    </thead>
-    <tbody id="casesBody">
-      <!-- Backend se data -->
-    </tbody>
-  </table>
+    <table class="case-table">
+      <thead>
+        <tr>
+          <th>Case Number</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Type</th>
+          <th>Place</th>
+          <th>Criminal Name</th>
+          <th>Description</th>
+          <th>File</th>
+        </tr>
+      </thead>
+      <tbody id="casesBody"></tbody>
+    </table>
+  </div>
 
   <script src="config.js"></script>
   <script src="view-cases.js"></script>
 </body>
+
 </html>

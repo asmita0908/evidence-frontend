@@ -1,4 +1,4 @@
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
+document.getElementById("loginForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const email = document.getElementById("email").value;
@@ -7,22 +7,28 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   try {
     const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({ email, password })
     });
 
     const data = await res.json();
 
-    if (res.ok) {
-  localStorage.setItem("token", data.token);
-  localStorage.setItem("role", data.user.role);
-  alert("Login successful");
-  window.location.href = "dashboard.html";
-}
- else {
+    if (!res.ok) {
       alert(data.message || "Login failed");
+      return;
     }
+
+    // ✅ token save
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("role", data.user.role);
+
+    // ✅ redirect
+    window.location.href = "dashboard.html";
+
   } catch (err) {
-    alert("Server not reachable");
+    alert("Server error. Try again later.");
+    console.error(err);
   }
 });

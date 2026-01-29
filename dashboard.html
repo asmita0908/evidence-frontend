@@ -5,44 +5,46 @@
   <title>Evidence Dashboard</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+<script>
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Please login first");
+    window.location.href = "index.html";
+  }
+</script>
+<h1 class="dashboard-title">Evidence Dashboard</h1>
 
-  <h1 class="dashboard-title">Evidence Dashboard</h1>
+<div class="role-select">
+  <label>Select Role:</label>
+  <select id="userRoleSelect">
+    <option value="admin">Admin</option>
+    <option value="officer">Officer</option>
+    <option value="viewer">Viewer</option>
+  </select>
+</div>
 
-  <div class="role-select">
-    <label>Select Role:</label>
-    <select id="userRoleSelect">
-      <option value="admin">Admin</option>
-      <option value="officer">Officer</option>
-      <option value="viewer">Viewer</option>
-    </select>
-  </div>
+<!-- Admin Panel -->
+<div class="panel" id="adminPanel">
+  <h2>Admin Panel</h2>
+  <p>Manage Users and System Settings</p>
+</div>
 
-  <!-- Admin Panel -->
-  <div class="panel" id="adminPanel">
-    <h2>Admin Panel</h2>
-    <p>Manage Users and System Settings</p>
-  </div>
+<!-- Upload Evidence -->
+<div class="panel">
+  <h2>Upload Evidence</h2>
 
-  <!-- Upload Evidence -->
-  <div class="panel">
-    <h2>Upload Evidence</h2>
-    <input type="file">
+  <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" id="evidenceFile" required>
     <br><br>
-    <button class="btn">Upload</button>
-  </div>
+    <button class="btn" type="submit">Upload</button>
+  </form>
 
-  <!-- View Evidence -->
-  <div class="panel">
-    <h2>View Evidence</h2>
+  <p id="uploadMsg"></p>
+</div>
 
-    <div class="evidence-row">
-      <button class="evidence-btn">Evidence 1</button>
-      <button class="evidence-btn">Evidence 2</button>
-      <button class="evidence-btn">Evidence 3</button>
-    </div>
-  </div>
-
-  <script src="dashboard.js"></script>
+<script src="config.js"></script>
+<script src="dashboard.js"></script>
 </body>
 </html>

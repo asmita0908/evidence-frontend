@@ -1,41 +1,92 @@
+
+/* 🌸 Pastel Background */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(120deg, #c8f0f4, #fde2e4);
+  padding: 0;
   min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: linear-gradient(135deg, #c8def8, #e0f2fe, #ede9fe);
+  display: flex;
+  align-items: flex-start;
 }
 
-.page-title {
+/* 🌸 Login / Signup Container */
+.container {
+  width: 380px;
+  margin: 80px auto;
+  padding: 30px;
+  background: #a0e1eacc; /* slight transparent white */
+  border-radius: 16px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
   text-align: center;
-  margin: 30px 0;
+  backdrop-filter: blur(6px);
 }
 
-.search-box {
+.container h2 {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.subtitle {
+  margin-bottom: 25px;
+  color: #666;
+}
+
+/* 🌸 Inputs */
+.input-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.input-group label {
   display: block;
-  width: 60%;
-  margin: 20px auto;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #444;
+}
+
+.input-group input {
+  width: 100%;
   padding: 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 16px;
+  font-size: 15px;
+  outline: none;
 }
 
-.case-table {
-  width: 90%;
-  margin: 20px auto;
-  border-collapse: collapse;
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
+.input-group input:focus {
+  border-color: #7c83fd;
 }
 
-.case-table th,
-.case-table td {
+/* 🌸 Button */
+.btn {
+  width: 100%;
   padding: 12px;
-  border: 1px solid #ddd;
-  text-align: left;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #7c83fd, #5f6dfc);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.case-table th {
-  background: #f4f4f4;
+.btn:hover {
+  background: linear-gradient(135deg, #5f6dfc, #3f4df5);
+}
+
+/* 🌸 Links */
+.link-text {
+  margin-top: 15px;
+}
+
+.link-text a {
+  color: #5f6dfc;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link-text a:hover {
+  text-decoration: underline;
 }
