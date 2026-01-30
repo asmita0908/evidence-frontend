@@ -1,31 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Upload Evidence</title>
-  <link rel="stylesheet" href="style.css">
+<title>Upload Evidence</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1 class="dashboard-title">Upload Evidence</h1>
+<div class="container">
+<h2>Upload Evidence</h2>
 
-<div class="panel">
-  <form id="uploadForm">
+<input id="caseNumber" placeholder="Case Number">
+<input id="caseType" placeholder="Case Type">
+<input id="criminalName" placeholder="Criminal Name">
+<input id="location" placeholder="Location">
 
-    <input type="text" placeholder="Case Number" required><br><br>
-    <input type="text" placeholder="Case Type" required><br><br>
-    <input type="text" placeholder="Criminal Name" required><br><br>
-    <input type="datetime-local" required><br><br>
-    <input type="text" placeholder="Location" required><br><br>
+<textarea id="description" placeholder="Description"></textarea>
 
-    <textarea placeholder="Case Description" rows="4"></textarea><br><br>
+<input type="file" id="file">
 
-    <input type="file" required><br><br>
-
-    <button class="btn">Upload Evidence</button>
-
-  </form>
+<button class="btn" onclick="upload()">Upload</button>
 </div>
 
-<script src="upload.js"></script>
+<script>
+async function upload(){
+
+const fd = new FormData();
+fd.append("file", file.files[0]);
+
+const res = await fetch(
+"https://evidence-backend-uim6.onrender.com/api/upload",
+{
+method:"POST",
+headers:{ Authorization:"Bearer "+localStorage.token },
+body: fd
+});
+
+const data = await res.json();
+alert(JSON.stringify(data));
+}
+</script>
+
 </body>
 </html>

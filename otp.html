@@ -1,36 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Enter OTP</title>
+<title>OTP Verify</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h2>Enter 2FA OTP</h2>
+<div class="container">
+<h2>2FA Verification</h2>
 
-<input id="otp" placeholder="6-digit OTP"><br><br>
-<button onclick="verifyOTP()">Verify</button>
+<div class="input-group">
+<label>Enter OTP</label>
+<input id="otp">
+</div>
+
+<button class="btn" onclick="verify()">Verify</button>
+</div>
 
 <script>
-async function verifyOTP() {
+async function verify(){
 
-  const email = localStorage.getItem("loginEmail");
-  const token = document.getElementById("otp").value;
+const email = localStorage.getItem("loginEmail");
+const token = document.getElementById("otp").value;
 
-  const res = await fetch("https://YOUR-BACKEND-URL/api/login-2fa", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ email, token })
-  });
+const res = await fetch("https://evidence-backend-uim6.onrender.com/api/login-2fa",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body: JSON.stringify({ email, token })
+});
 
-  const data = await res.json();
+const data = await res.json();
 
-  if (data.success) {
-    localStorage.setItem("token", data.token);
-    alert("2FA Login success");
-    window.location = "dashboard.html";
-  } else {
-    alert("Wrong OTP");
-  }
+if(data.success){
+localStorage.setItem("token", data.token);
+localStorage.setItem("role", data.role);
+window.location="dashboard.html";
+}else{
+alert(data.message);
+}
 }
 </script>
 

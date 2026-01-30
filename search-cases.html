@@ -1,40 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Search Cases</title>
-  <link rel="stylesheet" href="style.css">
+<title>Search Cases</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <h1 class="page-title">Search Cases</h1>
+<div class="container">
+<h2>Search Cases</h2>
 
-  <input
-    type="text"
-    id="searchInput"
-    class="search-box"
-    placeholder="Search by Criminal Name, Case Number, Type, Place, or Description"
-  >
+<input id="q" placeholder="Search criminal name">
+<button class="btn" onclick="search()">Search</button>
 
-  <table class="case-table">
-    <thead>
-      <tr>
-        <th>Criminal Name</th>
-        <th>Case Number</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Type</th>
-        <th>Place</th>
-        <th>Description</th>
-        <th>File</th>
-      </tr>
-    </thead>
-    <tbody id="resultsBody">
-      <!-- Data JS se aayega -->
-    </tbody>
-  </table>
+<div id="result"></div>
 
-  <script src="config.js"></script>
-  <script src="search.js"></script>
+</div>
+
+<script>
+async function search(){
+
+const res = await fetch(
+"https://evidence-backend-uim6.onrender.com/api/cases"
+);
+
+const data = await res.json();
+
+result.innerHTML = data.map(c =>
+`<p>${c.caseNumber} — ${c.criminalName}</p>`
+).join("");
+}
+</script>
+
 </body>
 </html>

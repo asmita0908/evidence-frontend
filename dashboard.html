@@ -1,117 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dashboard | Evidence System</title>
-  <style>
-    body {
-      font-family: Arial;
-      background: linear-gradient(135deg,#e3f2fd,#fce4ec);
-      padding: 30px;
-    }
-
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 14px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-    }
-
-    button {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin: 6px;
-      font-size: 14px;
-    }
-
-    .primary { background:#1976d2; color:white; }
-    .danger { background:#d32f2f; color:white; }
-
-    h2 { margin-top:0; }
-  </style>
+<title>Dashboard</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h2>🔐 Evidence Protection Dashboard</h2>
+<div class="container">
 
-<div class="card">
-  <b>User Role:</b> <span id="roleBox"></span>
-</div>
+<h2>Dashboard</h2>
+<p id="roleBox"></p>
 
-<!-- ADMIN PANEL -->
-<div id="adminPanel" class="card" style="display:none">
-  <h3>👑 Admin Controls</h3>
-  <button class="primary" onclick="goUpload()">Upload Evidence</button>
-  <button class="primary" onclick="goView()">View All Cases</button>
-  <button class="primary" onclick="goSearch()">Search Cases</button>
-  <button class="primary" onclick="goUsers()">Manage Users</button>
-</div>
+<button class="btn" onclick="goUpload()">Upload Evidence</button>
+<button class="btn" onclick="goView()">View Cases</button>
+<button class="btn" onclick="goSearch()">Search Cases</button>
 
-<!-- OFFICER PANEL -->
-<div id="officerPanel" class="card" style="display:none">
-  <h3>🛡 Officer Controls</h3>
-  <button class="primary" onclick="goUpload()">Upload Evidence</button>
-  <button class="primary" onclick="goView()">View Cases</button>
-</div>
+<button class="btn" onclick="logout()">Logout</button>
 
-<!-- VIEWER PANEL -->
-<div id="viewerPanel" class="card" style="display:none">
-  <h3>👁 Viewer Access</h3>
-  <button class="primary" onclick="goView()">View Cases</button>
-</div>
-
-<div class="card">
-  <button class="danger" onclick="logout()">Logout</button>
 </div>
 
 <script>
-
-const token = localStorage.getItem("token");
 const role = localStorage.getItem("role");
+document.getElementById("roleBox").innerText = "Role: " + role;
 
-if (!token) {
-  alert("Login first");
-  window.location = "login.html";
-}
+function goUpload(){ window.location="upload.html"; }
+function goView(){ window.location="view-cases.html"; }
+function goSearch(){ window.location="search-cases.html"; }
 
-document.getElementById("roleBox").innerText = role;
-
-// show role panels
-if (role === "admin") {
-  adminPanel.style.display = "block";
+function logout(){
+localStorage.clear();
+window.location="login.html";
 }
-else if (role === "officer") {
-  officerPanel.style.display = "block";
-}
-else {
-  viewerPanel.style.display = "block";
-}
-
-// navigation functions
-function goUpload() {
-  window.location = "upload.html";
-}
-
-function goView() {
-  window.location = "view-cases.html";
-}
-
-function goSearch() {
-  window.location = "search-cases.html";
-}
-
-function goUsers() {
-  alert("User management page next step 😉");
-}
-
-function logout() {
-  localStorage.clear();
-  window.location = "login.html";
-}
-
 </script>
 
 </body>
