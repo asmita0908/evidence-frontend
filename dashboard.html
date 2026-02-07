@@ -2,23 +2,21 @@
 <html>
 <head>
 <title>Dashboard</title>
-<link rel="stylesheet" href="style.css">
-</head>
+<link rel="stylesheet" href="style.css" />
 
-<body>
+<div class="card">
+  <h1>Evidence Dashboard</h1>
+  <p class="subtitle">Admin Panel</p>
 
-<div class="container">
+  <button onclick="location.href='upload.html'">
+    Upload Evidence
+  </button>
 
-<h2>Dashboard</h2>
-<p id="roleBox"></p>
-
-<button class="btn" onclick="goUpload()">Upload Evidence</button>
-<button class="btn" onclick="goView()">View Cases</button>
-<button class="btn" onclick="goSearch()">Search Cases</button>
-
-<button class="btn" onclick="logout()">Logout</button>
-
+  <button onclick="location.href='viewcases.html'">
+    View Evidence
+  </button>
 </div>
+
 
 <script>
 const role = localStorage.getItem("role");
