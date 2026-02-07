@@ -2,52 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sign Up | Evidence Protection System</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Signup</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <div class="container">
-    <h2>Evidence Protection System</h2>
-    <p class="subtitle">Create New Account</p>
+  <div class="auth-box">
+    <h2>Signup</h2>
+    <p>Create your account</p>
 
     <form id="signupForm">
+      <label>Name</label>
+      <input type="text" id="name" required>
 
-      <div class="input-group">
-        <label>Full Name</label>
-        <input type="text" id="name" placeholder="Enter your full name" required>
-      </div>
+      <label>Email</label>
+      <input type="email" id="email" required>
 
-      <div class="input-group">
-        <label>Email</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
-      </div>
+      <label>Password</label>
+      <input type="password" id="password" required>
 
-      <div class="input-group">
-        <label>Password</label>
-        <input type="password" id="password" placeholder="Create password" required>
-      </div>
-
-      <div class="input-group">
-        <label>Role</label>
-        <select id="role" required>
-          <option value="">Select role</option>
-          <option value="admin">Admin</option>
-          <option value="officer">Officer</option>
-          <option value="viewer">Viewer</option>
-        </select>
-      </div>
-
-      <button type="submit" class="btn">Sign Up</button>
+      <button type="submit">Signup</button>
     </form>
 
-    <p class="link-text">
-      Already have an account? <a href="index.html">Login</a>
-    </p>
+    <div class="link">
+      Already user? <a href="login.html">Login</a>
+    </div>
   </div>
 
-  <script src="config.js"></script>
-  <script src="signup.js"></script>
+  <script src="js/JSconfig.js"></script>
+  <script src="js/signup.js"></script>
 </body>
 </html>
-

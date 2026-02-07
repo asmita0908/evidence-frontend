@@ -20,7 +20,7 @@
 async function setup() {
   const email = document.getElementById("email").value;
 
-  const res = await fetch("https://YOUR-BACKEND-URL/api/2fa/setup", {
+  const res = await fetch("https://evidence-backend-uim6.onrender.com/api/2fa/setup", {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({ email })
