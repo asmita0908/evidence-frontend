@@ -29,34 +29,47 @@ New user? <a href="signup.html">Create account</a>
 </div>
 
 <script>
+const BASE_URL = "https://evidence-backend-uim6.onrender.com";
+
 async function login() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-  const emailVal = document.getElementById("email").value;
-  const passVal = document.getElementById("password").value;
-
-  const res = await fetch("https://evidence-backend-uim6.onrender.com/api/login", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify({ email: emailVal, password: passVal })
-  });
-
-  const data = await res.json();
-
-  if (data.require2FA) {
-    localStorage.setItem("loginEmail", data.email);
-    window.location = "otp.html";
+  if (!email || !password) {
+    alert("Email and password required");
     return;
   }
 
-  if (data.success) {
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("role", data.role);
-    window.location = "dashboard.html";
-  } else {
-    alert(data.message);
+  try {
+    const res = await fetch(`${BASE_URL}/api/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (data.require2FA) {
+      localStorage.setItem("loginEmail", email);
+      window.location.href = "otp.html";
+      return;
+    }
+
+    if (data.success) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
+      window.location.href = "dashboard.html";
+    } else {
+      alert(data.message || "Login failed");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Server error");
   }
 }
 </script>
+
 
 </body>
 </html>
