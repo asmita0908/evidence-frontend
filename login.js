@@ -6,7 +6,6 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
   try {
     const res = await fetch(`${BASE_URL}/api/login`, {
-
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -16,14 +15,22 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
     const data = await res.json();
 
-    if (!res.ok) {
+    // ❌ old res.ok check hata do
+    if (!data.success) {
       alert(data.message || "Login failed");
       return;
     }
 
-    // ✅ token save
+    // 🔐 2FA case
+    if (data.require2FA) {
+      localStorage.setItem("2fa_email", data.email);
+      window.location.href = "2fa.html";
+      return;
+    }
+
+    // ✅ token & role save
     localStorage.setItem("token", data.token);
-    localStorage.setItem("role", data.user.role);
+    localStorage.setItem("role", data.role);
 
     // ✅ redirect
     window.location.href = "dashboard.html";
